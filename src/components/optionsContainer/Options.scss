@@ -1,0 +1,114 @@
+$primary-drop-shadow: drop-shadow(5px 5px 5px rgb(65, 64, 64));
+$primary-top: -15px;
+
+.option-container {
+  margin-bottom: 20px;
+  .options {
+    display: flex;
+    gap: 20px;
+    filter: $primary-drop-shadow;
+
+    & > div {
+      width: 50px;
+    }
+
+    .add-link,
+    .remove-link,
+    .remove-shape,
+    .resize,
+    .download-canvas,
+    .export-To-Json {
+      .descText {
+        display: none;
+        font-size: 16px;
+        font-weight: 550;
+        filter: drop-shadow(5px 5px 5px gray);
+      }
+
+      .show-add-link {
+        position: absolute;
+        top: $primary-top;
+        left: 4px;
+      }
+
+      .show-remove-link {
+        position: absolute;
+        top: $primary-top;
+        left: 57px;
+      }
+
+      .show-resize {
+        position: absolute;
+        top: $primary-top;
+        left: 152px;
+      }
+
+      .show-remove-shape {
+        position: absolute;
+        top: $primary-top;
+        right: 120px;
+      }
+
+      .show-download-canvas {
+        position: absolute;
+        top: $primary-top;
+        right: 50px;
+      }
+
+      .show-export-To-Json {
+        position: absolute;
+        top: $primary-top;
+        right: -15px;
+      }
+    }
+
+    .add-link:hover {
+      .add-link-btn {
+        filter: $primary-drop-shadow;
+      }
+      .show-add-link {
+        display: block;
+      }
+    }
+    .remove-link:hover {
+      .remove-link-btn {
+        filter: $primary-drop-shadow;
+      }
+      .show-remove-link {
+        display: block;
+      }
+    }
+    .remove-shape:hover {
+      .remove-shape-btn {
+        filter: $primary-drop-shadow;
+      }
+      .show-remove-shape {
+        display: block;
+      }
+    }
+    .resize:hover {
+      .resize-btn {
+        filter: $primary-drop-shadow;
+      }
+      .show-resize {
+        display: block;
+      }
+    }
+    .download-canvas:hover {
+      .download-canvas-btn {
+        filter: $primary-drop-shadow;
+      }
+      .show-download-canvas {
+        display: block;
+      }
+    }
+    .export-To-Json:hover {
+      .export-To-Json-btn {
+        filter: $primary-drop-shadow;
+      }
+      .show-export-To-Json {
+        display: block;
+      }
+    }
+  }
+}

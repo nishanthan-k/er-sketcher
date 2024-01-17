@@ -1,0 +1,24 @@
+.erd-container {
+  
+  .splits {
+
+    .stencil {
+      border: 1px solid;
+    }
+
+    .paper{
+      border: 1px solid;
+    }
+
+    .inspector {
+      border: 1px solid;
+    }
+  }
+
+  .options {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+}
