@@ -1,37 +1,37 @@
 import { dia, linkTools, shapes } from "jointjs";
 
-export const createLink = (paperInstance, selectedShape, linkArr) => {
+export const createLink = (paperInstance, sourceId, targetId, linkArr) => {
   // if (checkLink(linkArr, selectedShape)) {
   const link = new shapes.standard.Link({
-    source: { id: selectedShape[0].id },
-    target: { id: selectedShape[1].id },
+    source: { id: sourceId },
+    target: { id: targetId },
     attrs: {
       line: {
         stroke: "black",
-        targetMarker: null,
+        // targetMarker: null,
         sourceMarker: null,
       },
     },
     // router: {name: "rightAngle"},
     // connector: {name: "rounded"} 
   });
+  linkArr.current.push(link);
   paperInstance.current.model.addCell(link);
-  const linkView = paperInstance.current.findViewByModel(link);
+  // const linkView = paperInstance.current.findViewByModel(link);
 
-  // Create tools for the link
+  // // Create tools for the link
   // const verticesTool = new linkTools.Vertices();
   // const segmentsTool = new linkTools.Segments();
-  // const sourceArrowheadTool = new linkTools.SourceArrowhead();
-  const targetArrowheadTool = new linkTools.TargetArrowhead();
-  const removeButton = new linkTools.Remove();
+  // // const sourceArrowheadTool = new linkTools.SourceArrowhead();
+  // const targetArrowheadTool = new linkTools.TargetArrowhead();
+  // const removeButton = new linkTools.Remove();
 
-  // Add tools to the linkView
-  const toolsView = new dia.ToolsView({
-    tools: [targetArrowheadTool, removeButton],
-  });
-  linkView.addTools(toolsView);
+  // // Add tools to the linkView
+  // const toolsView = new dia.ToolsView({
+  //   tools: [targetArrowheadTool, removeButton, verticesTool, segmentsTool],
+  // });
+  // linkView.addTools(toolsView);
   // link.addTools(toolsView);
-  // linkArr.current.push(link);
   // return link
   // selectedShape = [];
   // } else {
