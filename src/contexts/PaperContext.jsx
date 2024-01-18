@@ -9,6 +9,10 @@ export const PaperContextProvider = ({ children }) => {
   const [showTitle, setShowTitle] = useState(true);
   const [currentShape, setCurrentShape] = useState({});
   const [showInspector, setShowInspector] = useState(false);
+  const [position, setPosition] = useState({
+    x: "",
+    y: ""
+  });
 
   const updatePaperContext = (item, value) => {
     if (item === "shapeRef") {
@@ -19,7 +23,7 @@ export const PaperContextProvider = ({ children }) => {
   }
 
   return (
-    <PaperContext.Provider value={ { showTitle, paperRef, paperInstance, shapeRef, currentShape, setCurrentShape, showInspector, setShowInspector, updatePaperContext } }>
+    <PaperContext.Provider value={ { showTitle, paperRef, paperInstance, shapeRef, currentShape, setCurrentShape, showInspector, setShowInspector, position, setPosition, updatePaperContext } }>
       { children }
     </PaperContext.Provider>
   );

@@ -1,5 +1,5 @@
 $primary-drop-shadow: drop-shadow(5px 5px 5px rgb(65, 64, 64));
-$primary-top: -15px;
+$primary-top: -35px;
 
 .option-container {
   // margin-bottom: 20px;
@@ -29,7 +29,7 @@ $primary-top: -15px;
     .export-To-Json {
       .descText {
         display: none;
-        font-size: 16px;
+        font-size: 18px;
         font-weight: 550;
         filter: drop-shadow(5px 5px 5px gray);
       }

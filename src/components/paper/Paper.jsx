@@ -1,4 +1,4 @@
-import { dia } from 'jointjs';
+import { dia, linkTools } from 'jointjs';
 import "./Paper.scss"
 import React, { useContext, useEffect, useRef } from 'react';
 import { createLink, deleteLink, updateLink } from '../../commonFunctions/generalfunctions';
@@ -17,7 +17,7 @@ const Paper = () => {
   const createdEntities = useRef([]);
   const linkInProgress = useRef(null);
   const oldTarget = useRef(null);
-  const { paperRef, paperInstance, shapeRef, setCurrentShape, setShowInspector } = useContext(PaperContext);
+  const { paperRef, paperInstance, shapeRef, setPosition, setCurrentShape, setShowInspector } = useContext(PaperContext);
   const { addLink, removeLink, resize, removeShape, downloadCanvas } = useContext(OptionContext);
   // const paper = useRef(null);
   // let pap
@@ -73,7 +73,13 @@ const Paper = () => {
       })
 
 
-
+      paperInstance.current.on("element:pointermove", (cellView, event, x, y) => {
+        // resizeInfo.current.initialPointerPos = { x: event.clientX, y: event.clientY };
+        // console.log(event.clientX, event.clientY);
+        // console.log(cellView.model.attributes.position);
+        // console.log(cellView)
+        setPosition((prev) => ({x: x, y: y}))
+      });
 
 
 
@@ -84,7 +90,25 @@ const Paper = () => {
             selectedShape.current.push(cellView.model);
           } else if (selectedShape.current.length === 1 && selectedShape.current[0] !== cellView.model) {
             selectedShape.current.push(cellView.model);
-            createLink(paperInstance, selectedShape.current, linkArr);
+
+            var link = createLink(paperInstance, selectedShape.current, linkArr);
+            linkArr.current.push(link);
+            paperInstance.current.model.addCell(link);
+
+            const linkView = paperInstance.current.findViewByModel(link);
+
+            // Create tools for the link
+            // const verticesTool = new linkTools.Vertices();
+            // const segmentsTool = new linkTools.Segments();
+            // const sourceArrowheadTool = new linkTools.SourceArrowhead();
+            const targetArrowheadTool = new linkTools.TargetArrowhead();
+            const removeButton = new linkTools.Remove();
+
+            // Add tools to the linkView
+            const toolsView = new dia.ToolsView({
+              tools: [targetArrowheadTool, removeButton],
+            });
+            linkView.addTools(toolsView);
             selectedShape.current = [];
             // addLink.current = false;
           }

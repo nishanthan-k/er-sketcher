@@ -24,6 +24,13 @@ const Inspector = () => {
     }
   }, [showInspector, currentShape]);
 
+  // useEffect(() => {
+  //   if (showInspector && currentShape !== null) {
+  //     setPosition((prev) => ({ x: currentShape.model.attributes.position.x, y: currentShape.model.attributes.position.y }))
+  //   }
+
+  // }, [showInspector, currentShape])
+
   const textHandler = (e) => {
     const newText = e.target.value;
     setText(newText);
@@ -57,9 +64,27 @@ const Inspector = () => {
                 autoCapitalize=''
               />
             </label>
-            {/* <button type="button" onClick={ submitHandler }>
-          Submit
-        </button> */}
+            <table>
+              <tr><th>POSITION</th></tr>
+              <tr>
+                <td>X</td>
+                <td>{ currentShape.model.attributes.position.x }</td>
+                {/* {<td>{position.x}</td>  } */}
+              </tr>
+              <tr>
+                <td>Y</td>
+                <td>{ currentShape.model.attributes.position.y }</td>
+              </tr>
+              <tr><th>SIZE</th></tr>
+              <tr>
+                <td>WIDTH</td>
+                <td>{ currentShape.model.attributes.size.width }</td>
+              </tr>
+              <tr>
+                <td>HEIGHT</td>
+                <td>{ currentShape.model.attributes.size.height }</td>
+              </tr>
+            </table>
           </form>
         </div>
       ) : (
