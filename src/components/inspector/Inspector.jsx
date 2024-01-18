@@ -60,7 +60,6 @@ const Inspector = () => {
                 value={ text }
                 onChange={ textHandler }
                 autoFocus
-                autoCapitalize=''
               />
             </label>
             <table className='table'>
