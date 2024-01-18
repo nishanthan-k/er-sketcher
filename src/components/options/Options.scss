@@ -2,11 +2,20 @@ $primary-drop-shadow: drop-shadow(5px 5px 5px rgb(65, 64, 64));
 $primary-top: -15px;
 
 .option-container {
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
+  // .ui.segment {
+  //   border-radius: 3rem;
+  //   background-color: gray;
+  // }
+
   .options {
     display: flex;
     gap: 20px;
     filter: $primary-drop-shadow;
+
+    &:hover {
+      box-shadow: -2px -2px 7px gray;
+    }
 
     & > div {
       width: 50px;

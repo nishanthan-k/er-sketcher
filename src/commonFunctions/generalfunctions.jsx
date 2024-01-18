@@ -1,8 +1,14 @@
-import { shapes } from "jointjs";
+import { shapes, linkTools } from "jointjs";
 
 export const createLink = (paperInstance, selectedShape, linkArr) => {
   // if (checkLink(linkArr, selectedShape)) {
-    console.log('called link  ')
+  console.log('called link  ')
+  const removeButton = new linkTools.Remove({
+    focusOpacity: 0.5,
+    rotate: true,
+    distance: -20,
+    offset: 20
+  });
   const link = new shapes.standard.Link({
     source: { id: selectedShape[0].id },
     target: { id: selectedShape[1].id },
@@ -14,9 +20,9 @@ export const createLink = (paperInstance, selectedShape, linkArr) => {
       },
     },
     // router: {name: "rightAngle"},
-    // connector: {name: "rounded"}
+    // connector: {name: "rounded"} 
   });
-
+  link.tools = removeButton
   linkArr.current.push(link);
   paperInstance.current.model.addCell(link);
   // selectedShape = [];

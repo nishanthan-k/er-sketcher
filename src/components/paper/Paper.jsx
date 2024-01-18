@@ -1,4 +1,5 @@
 import { dia } from 'jointjs';
+import "./Paper.scss"
 import React, { useContext, useEffect, useRef } from 'react';
 import { createLink, deleteLink, updateLink } from '../../commonFunctions/generalfunctions';
 import { createCircle, createEllipse, createRectangle, createRhombus } from '../../commonFunctions/shapeFunctions';
@@ -16,18 +17,18 @@ const Paper = () => {
   const createdEntities = useRef([]);
   const linkInProgress = useRef(null);
   const oldTarget = useRef(null);
-  const { paperRef, paperInstance, shapeRef } = useContext(PaperContext);
+  const { paperRef, paperInstance, shapeRef, setCurrentShape, setShowInspector } = useContext(PaperContext);
   const { addLink, removeLink, resize, removeShape, downloadCanvas } = useContext(OptionContext);
   // const paper = useRef(null);
   // let pap
   // console.log('addLink', addLink)
 
-  const currentAddLink = useRef(addLink.current);
+  const currentAddLink = useRef(null);
 
-  useEffect(() => {
-    // Update the currentAddLink value when addLink changes
-    currentAddLink.current = addLink;
-  }, [addLink]);
+  // useEffect(() => {
+  //   setCurrentShape(currentAddLink.current)
+  //   setShowInspector(true)
+  // }, [currentAddLink, setCurrentShape]);
 
   const resizeInfo = useRef({
     isResizing: false,
@@ -38,7 +39,7 @@ const Paper = () => {
     if (paperInstance.current === null) {
       const paper = new dia.Paper({
         el: paperRef.current,
-        width: 900,
+        width: 1020,
         height: 650,
         model: new dia.Graph(),
       });
@@ -63,6 +64,19 @@ const Paper = () => {
         // shapeRef.current = "";
       });
 
+      paperInstance.current.on("element:pointerdown", (cellView) => {
+        if (!addLink.current && !removeLink.current && !removeShape.current && !resize.current) {
+          currentAddLink.current = cellView;
+          setCurrentShape(cellView)
+          setShowInspector(true);
+        }
+      })
+
+
+
+
+
+
       paperInstance.current.on("element:pointerclick", (cellView) => {
         if (addLink.current) {
           console.log('inside addlink')
@@ -76,24 +90,9 @@ const Paper = () => {
           }
         } else if (removeShape.current) {
           console.log('inside remove shape')
-          cellView.remove();
-          let linkId = "";
-          linkArr.current.map((link) => {
-            if (link.attributes.source.id === cellView.model.id || link.attributes.target.id === cellView.model.id) {
-              linkId = link.id;
-              deleteLink(paperInstance, link.id, linkArr);
-            }
-            return [];
-          });
-          linkArr.current = linkArr.current.filter((link) => link.id !== linkId);
-          let entityId = "";
-          createdEntities.current.map((entity) => {
-            if (entity.id === cellView.model.id || entity.id === cellView.model.id) {
-              entityId = entity.id;
-            }
-            return [];
-          });
-          createdEntities.current = createdEntities.current.filter((entity) => entity.id !== entityId);
+          console.log(cellView.model.id);
+          const removeShape = cellView.model;
+          removeShape.remove();
         } else if (resize.current) {
           paperInstance.current.on("element:pointerdown", (cellView, event, x, y) => {
             if (cellView.model && cellView.model.isElement() && resize.current) {
@@ -159,20 +158,21 @@ const Paper = () => {
         }
       });
 
-      paperInstance.current.on("element:pointerdblclick", (cellView) => {
-        if (!resize.current) {
-          const model = cellView.model;
-          const text = prompt("Enter new text:", model.attr("label/text"));
-          if (text !== null) {
-            model.attr("label/text", text);
-            // var width = Math.max(text.length * 7, model.attributes.size.width);
-            // model.resize(width, model.attributes.size.height);
-          }
-        }
-      });
+      // paperInstance.current.on("element:pointerdblclick", (cellView) => {
+      //   if (!resize.current) {
+      //     const model = cellView.model;
+      //     const text = prompt("Enter new text:", model.attr("label/text"));
+      //     if (text !== null) {
+      //       model.attr("label/text", text);
+      //       // var width = Math.max(text.length * 7, model.attributes.size.width);
+      //       // model.resize(width, model.attributes.size.height);
+      //     }
+      //     setCurrentShape(cellView)
+      //   }
+      // });
     }
     // console.log('inside', addLink, removeLink, removeShape, resize, downloadCanvas);
-  }, [paperRef, paperInstance, shapeRef, createdShapes, totalShapes, addLink, removeLink, removeShape, resize, downloadCanvas, selectedShape]);
+  }, [paperRef, paperInstance, shapeRef, createdShapes, totalShapes, addLink, removeLink, removeShape, resize, downloadCanvas, selectedShape, setCurrentShape, setShowInspector]);
   // paperRef, paperInstance, shapeRef, createdShapes, totalShapes, addLink, removeLink, removeShape, resize, downloadCanvas, selectedShape
   return (
     <div className="paper" ref={ paperRef } />

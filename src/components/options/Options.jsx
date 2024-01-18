@@ -32,6 +32,8 @@ const Options = () => {
             primary={ activeButton === "addLink" }
             icon="linkify"
             size='large'
+            // size='large'
+            // circular
           />
         </div>
         <div className="remove-link">
@@ -42,6 +44,8 @@ const Options = () => {
             primary={ activeButton === "removeLink" }
             icon="unlinkify"
             size='large'
+            // size='large'
+            // circular
           />
         </div>
         <div className="resize">
@@ -52,6 +56,8 @@ const Options = () => {
             primary={ activeButton === "resize" }
             icon="move"
             size='large'
+            // size='large'
+            // circular
           />
         </div>
         <div className="remove-shape">
@@ -62,6 +68,8 @@ const Options = () => {
             primary={ activeButton === "removeShape" }
             icon="remove circle"
             size='large'
+            // size='large'
+            // circular
           />
         </div>
         <div className="download-canvas">
@@ -72,6 +80,8 @@ const Options = () => {
             primary={ activeButton === "downloadCanvas" }
             icon="download"
             size='large'
+            // size='large'
+            // circular
           />
         </div>
         <div className="export-To-Json">
@@ -82,6 +92,8 @@ const Options = () => {
             primary={ activeButton === "exportToJson" }
             icon="share square"
             size='large'
+            // size='large'
+            // circular
           />
         </div>
       </Segment>

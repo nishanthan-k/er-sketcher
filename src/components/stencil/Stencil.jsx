@@ -4,23 +4,8 @@ import { Image } from 'semantic-ui-react'
 import { PaperContext } from '../../contexts/PaperContext'
 
 const Stencil = () => {
+  // const {showTitle} = useContext(PaperContext);
   const { updatePaperContext } = useContext(PaperContext)
-  // const handleRect = () => {
-  //   shapeRef.current = "rectangle";
-  //   // createPaper();
-  // };
-  // const handleEllip = () => {
-  //   shapeRef.current = "ellipse";
-  //   // createPaper();
-  // };
-  // const handleRhom = () => {
-  //   shapeRef.current = "rhombus";
-  //   // createPaper();
-  // };
-  // const handleCirc = () => {
-  //   shapeRef.current = "circle";
-  //   // createPaper();
-  // };
 
   const handleShapeClick = (shapeType) => {
     updatePaperContext("shapeRef", shapeType);
