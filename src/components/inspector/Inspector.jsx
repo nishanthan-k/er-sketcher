@@ -53,7 +53,6 @@ const Inspector = () => {
         <div className='inspector'>
           <p className='generalTitle'>PRESENTATION</p>
           <p className='shapeTitle'>{ shapeTitle }</p>
-          <form action="" className='form'>
             <label>
               <input
                 type="text"
@@ -64,28 +63,27 @@ const Inspector = () => {
                 autoCapitalize=''
               />
             </label>
-            <table>
-              <tr><th>POSITION</th></tr>
-              <tr>
-                <td>X</td>
-                <td>{ currentShape.model.attributes.position.x }</td>
-                {/* {<td>{position.x}</td>  } */}
+            <table className='table'>
+              <tr className='tRow'><th className='tHead'>POSITION</th></tr>
+              <tr className='tRow'>
+                <td className='tData'>X</td>
+                <td className='tData'>{ currentShape.model.attributes.position.x }</td>
+                {/* {<td className='tData'>{position.x}</td>  } */}
               </tr>
-              <tr>
-                <td>Y</td>
-                <td>{ currentShape.model.attributes.position.y }</td>
+              <tr className='tRow'>
+                <td className='tData'>Y</td>
+                <td className='tData'>{ currentShape.model.attributes.position.y }</td>
               </tr>
-              <tr><th>SIZE</th></tr>
-              <tr>
-                <td>WIDTH</td>
-                <td>{ currentShape.model.attributes.size.width }</td>
+              <tr className='tRow'><th className='tHead'>SIZE</th></tr>
+              <tr className='tRow'>
+                <td className='tData'>WIDTH</td>
+                <td className='tData'>{ currentShape.model.attributes.size.width }</td>
               </tr>
-              <tr>
-                <td>HEIGHT</td>
-                <td>{ currentShape.model.attributes.size.height }</td>
+              <tr className='tRow'>
+                <td className='tData'>HEIGHT</td>
+                <td className='tData'>{ currentShape.model.attributes.size.height }</td>
               </tr>
             </table>
-          </form>
         </div>
       ) : (
         <div className='inspector'>

@@ -1,4 +1,4 @@
-import { dia, linkTools } from 'jointjs';
+import { dia, linkTools, shapes } from 'jointjs';
 import "./Paper.scss"
 import React, { useContext, useEffect, useRef } from 'react';
 import { createLink, deleteLink, updateLink } from '../../commonFunctions/generalfunctions';
@@ -79,6 +79,7 @@ const Paper = () => {
         // console.log(cellView.model.attributes.position);
         // console.log(cellView)
         setPosition((prev) => ({x: x, y: y}))
+        // setCurrentShape(cellView)
       });
 
 
@@ -90,25 +91,7 @@ const Paper = () => {
             selectedShape.current.push(cellView.model);
           } else if (selectedShape.current.length === 1 && selectedShape.current[0] !== cellView.model) {
             selectedShape.current.push(cellView.model);
-
-            var link = createLink(paperInstance, selectedShape.current, linkArr);
-            linkArr.current.push(link);
-            paperInstance.current.model.addCell(link);
-
-            const linkView = paperInstance.current.findViewByModel(link);
-
-            // Create tools for the link
-            // const verticesTool = new linkTools.Vertices();
-            // const segmentsTool = new linkTools.Segments();
-            // const sourceArrowheadTool = new linkTools.SourceArrowhead();
-            const targetArrowheadTool = new linkTools.TargetArrowhead();
-            const removeButton = new linkTools.Remove();
-
-            // Add tools to the linkView
-            const toolsView = new dia.ToolsView({
-              tools: [targetArrowheadTool, removeButton],
-            });
-            linkView.addTools(toolsView);
+            createLink(paperInstance, selectedShape.current, linkArr);
             selectedShape.current = [];
             // addLink.current = false;
           }
@@ -149,10 +132,10 @@ const Paper = () => {
       });
 
       paperInstance.current.on("link:pointerdown", (linkView) => {
-        if (removeLink.current) {
-          linkView.remove();
-          deleteLink(paperInstance, linkView.model.id, linkArr);
-        }
+        // if (removeLink.current) {
+        //   linkView.remove();
+        //   deleteLink(paperInstance, linkView.model.id, linkArr);
+        // }
         linkInProgress.current = linkView.model;
         linkChangeflag.current = true;
         oldTarget.current = linkInProgress.current.attributes.target.id;
@@ -160,7 +143,7 @@ const Paper = () => {
 
       paperInstance.current.on("link:pointerup", (linkView) => {
         if (linkChangeflag.current && removeLink.current === false) {
-          updateLink(paperInstance, linkView.model, oldTarget.current);
+          // updateLink(paperInstance, linkView.model, oldTarget.current);
         }
         linkChangeflag.current = false;
       });
@@ -196,7 +179,7 @@ const Paper = () => {
       // });
     }
     // console.log('inside', addLink, removeLink, removeShape, resize, downloadCanvas);
-  }, [paperRef, paperInstance, shapeRef, createdShapes, totalShapes, addLink, removeLink, removeShape, resize, downloadCanvas, selectedShape, setCurrentShape, setShowInspector]);
+  }, [paperRef, paperInstance, shapeRef, createdShapes, totalShapes, addLink, removeLink, removeShape, resize, downloadCanvas, selectedShape, setCurrentShape, setPosition, setShowInspector]);
   // paperRef, paperInstance, shapeRef, createdShapes, totalShapes, addLink, removeLink, removeShape, resize, downloadCanvas, selectedShape
   return (
     <div className="paper" ref={ paperRef } />

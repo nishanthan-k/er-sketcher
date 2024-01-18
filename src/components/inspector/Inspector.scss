@@ -1,5 +1,5 @@
 .inspector {
-  padding: .5rem;
+  padding: 0.5rem;
 
   .generalTitle {
     font-size: 18px;
@@ -11,26 +11,18 @@
     font-weight: 500;
   }
 
-  .form {
-    display: flex;
-    flex-direction: column;
-    // justify-content: center;
-    // align-items: center;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  // justify-content: center;
+  // align-items: center;
+  gap: 10px;
 
-    input {
-      height: 30px;
-      outline: none;
-      outline: 2px solid gray;
-      border: none;
-      border-radius: 5px;
-      padding-left: 10px;
-    }
-
-    table {
-      // width: 70%; 
-      // display: flex;
-      // flex-direction: column;
-    }
+  input {
+    height: 30px;
+    outline: none;
+    outline: 2px solid gray;
+    border: none;
+    border-radius: 5px;
+    padding-left: 10px;
   }
 }
