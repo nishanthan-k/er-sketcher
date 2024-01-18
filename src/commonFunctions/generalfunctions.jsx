@@ -1,4 +1,4 @@
-import { dia, linkTools, shapes } from "jointjs";
+import { shapes } from "jointjs";
 
 export const createLink = (paperInstance, sourceId, targetId, linkArr) => {
   // if (checkLink(linkArr, selectedShape)) {
@@ -17,26 +17,6 @@ export const createLink = (paperInstance, sourceId, targetId, linkArr) => {
   });
   linkArr.current.push(link);
   paperInstance.current.model.addCell(link);
-  // const linkView = paperInstance.current.findViewByModel(link);
-
-  // // Create tools for the link
-  // const verticesTool = new linkTools.Vertices();
-  // const segmentsTool = new linkTools.Segments();
-  // // const sourceArrowheadTool = new linkTools.SourceArrowhead();
-  // const targetArrowheadTool = new linkTools.TargetArrowhead();
-  // const removeButton = new linkTools.Remove();
-
-  // // Add tools to the linkView
-  // const toolsView = new dia.ToolsView({
-  //   tools: [targetArrowheadTool, removeButton, verticesTool, segmentsTool],
-  // });
-  // linkView.addTools(toolsView);
-  // link.addTools(toolsView);
-  // return link
-  // selectedShape = [];
-  // } else {
-  //   console.log("Link already exists");
-  // }
 };
 
 export const updateLink = (paperInstance, link, newTarget) => {
@@ -53,20 +33,6 @@ export const updateLink = (paperInstance, link, newTarget) => {
   });
   deleteLink(paperInstance, link.id)
   paperInstance.current.model.addCell(newLink);
-  const linkView = paperInstance.current.findViewByModel(newLink);
-
-  // Create tools for the link
-  const verticesTool = new linkTools.Vertices();
-  const segmentsTool = new linkTools.Segments();
-  // const sourceArrowheadTool = new linkTools.SourceArrowhead();
-  const targetArrowheadTool = new linkTools.TargetArrowhead();
-  const removeButton = new linkTools.Remove();
-
-  // Add tools to the linkView
-  const toolsView = new dia.ToolsView({
-    tools: [targetArrowheadTool, removeButton, verticesTool, segmentsTool],
-  });
-  linkView.addTools(toolsView);
 }
 
 

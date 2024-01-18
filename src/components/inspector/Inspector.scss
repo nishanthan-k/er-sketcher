@@ -25,4 +25,31 @@
     border-radius: 5px;
     padding-left: 10px;
   }
+
+  .table-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .table {
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-collapse: collapse;
+      
+      .tHeadRow {
+        padding-top: 1rem;
+      }
+      
+      .tData,
+      .tRow {
+        width: 100%;
+      }
+      
+      // .tRow {
+      //   border: 1px solid;
+      // }
+    }
+  }
 }

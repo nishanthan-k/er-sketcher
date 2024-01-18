@@ -9,7 +9,6 @@ import "./Paper.scss";
 const Paper = () => {
   const createdShapes = useRef([]);
   const totalShapes = useRef(null);
-  // const linkChangeflag = useRef(false);
   // let selectedShape = [];
   const selectedShape = useRef([]);
   const linkArr = useRef([]);
@@ -50,7 +49,6 @@ const Paper = () => {
       });
       paperInstance.current = paper;
       // }
-
 
       paperInstance.current.on("blank:pointerclick", (event, x, y) => {
         if (linkInProgress.current) {
@@ -132,7 +130,6 @@ const Paper = () => {
       });
 
       paperInstance.current.on("link:pointerdown", (linkView) => {
-        // linkChangeflag.current = true;
         const updatedLink = paperInstance.current.findViewByModel(linkView.model);
         linkInProgress.current = updatedLink;
         updatedLink.addTools(toolsView);
