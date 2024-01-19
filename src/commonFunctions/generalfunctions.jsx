@@ -4,7 +4,6 @@ import { dia, elementTools, linkTools, shapes } from "jointjs";
 // tools for the link
 const verticesTool = new linkTools.Vertices();
 const segmentsTool = new linkTools.Segments();
-// const sourceArrowheadTool = new linkTools.SourceArrowhead();
 const targetArrowheadTool = new linkTools.TargetArrowhead();
 const removeButton = new linkTools.Remove({
   distance: 50,
@@ -25,16 +24,6 @@ const removeButtonElement = new elementTools.Remove({
   distance: 20,
   offset: 20
 });
-const connect = elementTools.Connect.extend({
-  getPosition: (view) => {
-    return { x: view.model.size.width, y: 0 }
-  },
-  setPosition: function (view, coordinates) {
-    // var model = view.model;
-    // model.size({ width: coordinates.x, height: coordinates.y });
-  },
-  resetPosition: function (view) { },
-});
 const controltButton = elementTools.Control.extend({
   getPosition: function (view) {
     var model = view.model;
@@ -48,11 +37,10 @@ const controltButton = elementTools.Control.extend({
   resetPosition: function (view) { },
 });
 export const toolsViewElement = new dia.ToolsView({
-  tools: [removeButtonElement, boundaryToolElement, new connect(), new controltButton({
-    handleAttributes: { fill: "red", cursor: "nwse-resize" },
+  tools: [removeButtonElement, boundaryToolElement, new controltButton({
+    handleAttributes: { fill: "gray", cursor: "nwse-resize" },
   }),],
 });
-
 
 
 export const createLink = (paperInstance, sourceId, targetId, linkArr) => {

@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Image } from 'semantic-ui-react'
 import { ShapeContext } from '../../contexts/ShapeContext'
 import "./Stencil.scss"

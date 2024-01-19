@@ -1,11 +1,11 @@
-import { dia } from 'jointjs';
+import { dia, elementTools } from 'jointjs';
 import React, { useContext, useEffect, useRef } from 'react';
-import { createLink, toolsView, toolsViewElement, } from '../../commonFunctions/generalfunctions';
+import { createLink, toolsView } from '../../commonFunctions/generalfunctions';
 import { createCircle, createEllipse, createRectangle, createRhombus } from '../../commonFunctions/shapeFunctions';
 import { OptionContext } from '../../contexts/OptionContext';
 import { PaperContext } from '../../contexts/PaperContext';
-import "./Paper.scss";
 import { ShapeContext } from '../../contexts/ShapeContext';
+import "./Paper.scss";
 
 const Paper = () => {
   const createdShapes = useRef([]);
@@ -29,6 +29,35 @@ const Paper = () => {
   });
 
   const removeShapeRef = () => shapeRef.current = "";
+
+  // tools for element
+  const boundaryToolElement = new elementTools.Boundary({
+    padding: 10,
+    rotate: true,
+    useModelGeometry: true,
+  });
+  const removeButtonElement = new elementTools.Remove({
+    distance: 20,
+    offset: 20
+  });
+  const controltButton = elementTools.Control.extend({
+    getPosition: function (view) {
+      var model = view.model;
+      var size = model.size();
+      setPosition((prev) => ({ x: 10, y: 10 }))
+      return { x: size.width, y: size.height };
+    },
+    setPosition: function (view, coordinates) {
+      var model = view.model;
+      model.size({ width: coordinates.x, height: coordinates.y });
+    },
+    resetPosition: function (view) { },
+  });
+  const toolsViewElement = new dia.ToolsView({
+    tools: [removeButtonElement, boundaryToolElement, new controltButton({
+      handleAttributes: { fill: "gray", cursor: "nwse-resize" },
+    }),],
+  });
 
   useEffect(() => {
     if (paperInstance.current === null) {
