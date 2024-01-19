@@ -1,22 +1,35 @@
 .stencil {
   width: 100%;
   padding: 0 !important;
-  
+
   .standard {
     display: flex;
-    padding: 0px 20px 10px;
-    justify-content: space-evenly;
+    flex-direction: column;
     align-items: center;
-    flex-wrap: wrap;
-    // gap: 10px;
+    gap: 10px;
+    padding: 10px 20px 10px;
 
-    .img {
-      width: 50px;
-      height: 50px;
+    .container {
+      width: 100px;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
 
-      &:hover {
-        cursor: pointer;
-        filter: drop-shadow(5px 5px 5px gray);
+      .img {
+        width: 70px;
+        height: 70px;
+
+        &:hover {
+          cursor: pointer;
+          filter: drop-shadow(5px 5px 5px gray);
+        }
+      }
+    }
+
+    .img-container {
+      .img {
+        width: 90px;
+        height: 90px;
       }
     }
   }

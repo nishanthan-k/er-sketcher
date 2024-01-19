@@ -48,7 +48,7 @@ const Inspector = () => {
           <label>
             <input
               type="text"
-              placeholder={ text || "None" }
+              placeholder={ text || "Text" }
               value={ text }
               onChange={ textHandler }
               autoFocus
@@ -69,11 +69,11 @@ const Inspector = () => {
               <tr className='tHeadRow'><th className='tHead'>SIZE</th></tr>
               <tr className='tRow'>
                 <td className='tData'>WIDTH</td>
-                <td className='tData'>{ currentShape.model.attributes.size.width }</td>
+                <td className='tData'>{ Math.round(currentShape.model.attributes.size.width) }</td>
               </tr>
               <tr className='tRow'>
                 <td className='tData'>HEIGHT</td>
-                <td className='tData'>{ currentShape.model.attributes.size.height }</td>
+                <td className='tData'>{ Math.round(currentShape.model.attributes.size.height) }</td>
               </tr>
             </table>
           </div>

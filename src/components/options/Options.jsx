@@ -11,7 +11,7 @@ const Options = () => {
     updateContext(item);
     if (activeButton === item) {
       setActiveButton(null)
-    } else if (item === "downloadCanvas" || item === "exportToJson") {
+    } else if (item === "downloadCanvas" || item === "exportToJson" || item === "uploadJson") {
       setActiveButton(item);
       setTimeout(() => {
         setActiveButton("");
@@ -32,44 +32,6 @@ const Options = () => {
             primary={ activeButton === "addLink" }
             icon="linkify"
             size='large'
-            // size='large'
-            // circular
-          />
-        </div>
-        <div className="remove-link">
-          <p className={ "descText show-remove-link" }>Remove Link</p>
-          <Button
-            className={ `remove-link-btn ${activeButton === "removeLink" ? 'active' : ''}` }
-            onClick={ () => handleUpdateContext("removeLink") }
-            primary={ activeButton === "removeLink" }
-            icon="unlinkify"
-            size='large'
-            // size='large'
-            // circular
-          />
-        </div>
-        <div className="resize">
-          <p className={ "descText show-resize" }>Resize</p>
-          <Button
-            className={ `resize-btn ${activeButton === "resize" ? 'active' : ''}` }
-            onClick={ () => handleUpdateContext("resize") }
-            primary={ activeButton === "resize" }
-            icon="move"
-            size='large'
-            // size='large'
-            // circular
-          />
-        </div>
-        <div className="remove-shape">
-          <p className={ "descText show-remove-shape" }>Remove Element</p>
-          <Button
-            className={ `remove-shape-btn ${activeButton === "removeShape" ? 'active' : ''}` }
-            onClick={ () => handleUpdateContext("removeShape") }
-            primary={ activeButton === "removeShape" }
-            icon="remove circle"
-            size='large'
-            // size='large'
-            // circular
           />
         </div>
         <div className="download-canvas">
@@ -80,20 +42,26 @@ const Options = () => {
             primary={ activeButton === "downloadCanvas" }
             icon="download"
             size='large'
-            // size='large'
-            // circular
           />
         </div>
         <div className="export-To-Json">
           <p className={ "descText show-export-To-Json" }>Download JSON</p>
           <Button
-            className={ `export-To-Json-btn ${activeButton === "removeShape" ? 'active' : ''}` }
+            className={ `export-To-Json-btn ${activeButton === "exportToJson" ? 'active' : ''}` }
             onClick={ () => handleUpdateContext("exportToJson") }
             primary={ activeButton === "exportToJson" }
             icon="share square"
             size='large'
-            // size='large'
-            // circular
+          />
+        </div>
+        <div className="upload-Json">
+          <p className={ "descText show-upload-Json" }>Upload JSON</p>
+          <Button
+            className={ `upload-Json-btn ${activeButton === "uploadJson" ? 'active' : ''}` }
+            onClick={ () => handleUpdateContext("uploadJson") }
+            primary={ activeButton === "uploadJson" }
+            icon="upload"
+            size='large'
           />
         </div>
       </Segment>

@@ -1,6 +1,6 @@
 import { dia } from 'jointjs';
 import React, { useContext, useEffect, useRef } from 'react';
-import { createLink } from '../../commonFunctions/generalfunctions';
+import { createLink, toolsView, toolsViewElement, } from '../../commonFunctions/generalfunctions';
 import { createCircle, createEllipse, createRectangle, createRhombus } from '../../commonFunctions/shapeFunctions';
 import { OptionContext } from '../../contexts/OptionContext';
 import { PaperContext } from '../../contexts/PaperContext';
@@ -17,7 +17,7 @@ const Paper = () => {
   const elementInProgress = useRef(null);
   const oldTarget = useRef(null);
   const { graphRef, paperRef, paperInstance } = useContext(PaperContext);
-  const { shapeRef, setPosition, setCurrentShape, setShowInspector, toolsView, toolsViewElement, } = useContext(ShapeContext);
+  const { shapeRef, setPosition, setCurrentShape, setShowInspector } = useContext(ShapeContext);
   const { addLink, removeLink, resize, removeShape } = useContext(OptionContext);
 
 
@@ -111,7 +111,7 @@ const Paper = () => {
             }
           });
         }
-        removeShapeRef();
+        // removeShapeRef();
       });
 
 
@@ -151,6 +151,10 @@ const Paper = () => {
       paperInstance.current.on("element:pointermove", (cellView, event, x, y) => {
         setPosition((prev) => ({ x: x, y: y }))
       });
+
+      paperInstance.current.on("blank:mouseenter", () => {
+        console.log('moving')
+      })
     }
   });
 

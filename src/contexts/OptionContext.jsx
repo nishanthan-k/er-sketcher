@@ -5,18 +5,13 @@ import { PaperContext } from './PaperContext';
 export const OptionContext = createContext();
 
 export const OptionContextProvider = ({ children }) => {
-  // const [addLink, setAddLink] = useState(false);
-  // const [removeLink, setRemoveLink] = useState(false);
-  // const [resize, setResize] = useState(false);
-  // const [removeShape, setRemoveShape] = useState(false);
-  // const [downloadCanvas, setDownloadCanvas] = useState(false);
-  // const [exportJson, setExportJson] = useState(false);
   const addLink = useRef(false);
   const removeLink = useRef(false);
   const resize = useRef(false);
   const removeShape = useRef(false);
   const downloadCanvas = useRef(false);
   const exportJson = useRef(false);
+  const fileInputRef = useRef(null);
   const { paperRef, paperInstance, shapeRef } = useContext(PaperContext)
 
   const downloadDiagram = () => {
@@ -53,29 +48,45 @@ export const OptionContextProvider = ({ children }) => {
     }
   };
 
+  const uploadJson = (file) => {
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        const jsonDataString = JSON.parse(e.target.result);
+        console.log(jsonDataString.cells);
+
+        paperInstance.current.model.fromJSON(jsonDataString);
+        try {
+          console.log('paperInstance')
+        } catch (error) {
+          console.error("Error parsing JSON:", error);
+        }
+      };
+
+      reader.readAsText(file);
+    }
+  };
+
+
   const updateContext = (item) => {
-    // console.log(item, item === "addLink" ? true : false)
-    // setAddLink(true);
-    // setRemoveLink(item === "removeLink" ? !removeLink : false);
-    // setResize(item === "resize" ? !resize : false);
-    // setRemoveShape(item === "removeShape" ? !removeShape : false);
-    // setDownloadCanvas(item === "downloadCanvas" ? !downloadCanvas : false);
-    // setExportJson(item === "exportToJson" ? !exportJson : false);
     addLink.current = item === "addLink" ? !addLink.current : false;
     removeLink.current = item === "removeLink" ? !removeLink.current : false;
     resize.current = item === "resize" ? !resize.current : false;
     removeShape.current = item === "removeShape" ? !removeShape.current : false;
     downloadCanvas.current = item === "downloadCanvas" ? !downloadCanvas.current : false;
-    exportJson.current = item === "exportToJson" ? !exportJson.current : false;
+    // exportJson.current = item === "exportToJson" ? !exportJson.current : false;
     shapeRef.current = "";
 
     if (item === "downloadCanvas") {
       downloadDiagram();
     } else if (item === "exportToJson") {
       exportToJSON();
-    } else if (item === "") {
-      console.log('none')
-    }
+    } else if (item === "uploadJson") {
+      fileInputRef.current.click();
+      // uploadJson();
+    } 
 
     console.log('updateContext', addLink, removeLink, resize, removeShape, downloadCanvas, exportJson);
   };
@@ -83,7 +94,14 @@ export const OptionContextProvider = ({ children }) => {
 
 
   return (
-    <OptionContext.Provider value={ { addLink, removeLink, resize, removeShape, downloadCanvas, exportToJSON, updateContext } }>
+    <OptionContext.Provider value={ { addLink, removeLink, resize, removeShape, downloadCanvas, exportToJSON, uploadJson, updateContext } }>
+      <input
+        type="file"
+        accept=".json"
+        style={ { display: 'none' } }
+        ref={ fileInputRef }
+        onChange={ (e) => uploadJson(e.target.files[0]) }
+      />
       { children }
     </OptionContext.Provider>
   );

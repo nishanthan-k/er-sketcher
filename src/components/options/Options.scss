@@ -22,11 +22,9 @@ $primary-top: -35px;
     }
 
     .add-link,
-    .remove-link,
-    .remove-shape,
-    .resize,
     .download-canvas,
-    .export-To-Json {
+    .export-To-Json,
+    .upload-Json {
       .descText {
         display: none;
         font-size: 18px;
@@ -37,34 +35,22 @@ $primary-top: -35px;
       .show-add-link {
         position: absolute;
         top: $primary-top;
-        left: 4px;
-      }
-
-      .show-remove-link {
-        position: absolute;
-        top: $primary-top;
-        left: 57px;
-      }
-
-      .show-resize {
-        position: absolute;
-        top: $primary-top;
-        left: 152px;
-      }
-
-      .show-remove-shape {
-        position: absolute;
-        top: $primary-top;
-        right: 120px;
+        left: 3px;
       }
 
       .show-download-canvas {
         position: absolute;
         top: $primary-top;
-        right: 50px;
+        left: 40px;
       }
 
       .show-export-To-Json {
+        position: absolute;
+        top: $primary-top;
+        right: 45px;
+      }
+
+      .show-upload-Json {
         position: absolute;
         top: $primary-top;
         right: -15px;
@@ -76,30 +62,6 @@ $primary-top: -35px;
         filter: $primary-drop-shadow;
       }
       .show-add-link {
-        display: block;
-      }
-    }
-    .remove-link:hover {
-      .remove-link-btn {
-        filter: $primary-drop-shadow;
-      }
-      .show-remove-link {
-        display: block;
-      }
-    }
-    .remove-shape:hover {
-      .remove-shape-btn {
-        filter: $primary-drop-shadow;
-      }
-      .show-remove-shape {
-        display: block;
-      }
-    }
-    .resize:hover {
-      .resize-btn {
-        filter: $primary-drop-shadow;
-      }
-      .show-resize {
         display: block;
       }
     }
@@ -116,6 +78,14 @@ $primary-top: -35px;
         filter: $primary-drop-shadow;
       }
       .show-export-To-Json {
+        display: block;
+      }
+    }
+    .upload-Json:hover {
+      .upload-Json-btn {
+        filter: $primary-drop-shadow;
+      }
+      .show-upload-Json {
         display: block;
       }
     }

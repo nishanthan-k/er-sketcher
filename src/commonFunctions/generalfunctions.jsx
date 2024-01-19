@@ -1,4 +1,59 @@
-import { shapes } from "jointjs";
+import { dia, elementTools, linkTools, shapes } from "jointjs";
+
+
+// tools for the link
+const verticesTool = new linkTools.Vertices();
+const segmentsTool = new linkTools.Segments();
+// const sourceArrowheadTool = new linkTools.SourceArrowhead();
+const targetArrowheadTool = new linkTools.TargetArrowhead();
+const removeButton = new linkTools.Remove({
+  distance: 50,
+  offset: 20
+});
+export const toolsView = new dia.ToolsView({
+  tools: [targetArrowheadTool, removeButton, verticesTool, segmentsTool],
+});
+
+
+// tools for element
+const boundaryToolElement = new elementTools.Boundary({
+  padding: 10,
+  rotate: true,
+  useModelGeometry: true,
+});
+const removeButtonElement = new elementTools.Remove({
+  distance: 20,
+  offset: 20
+});
+const connect = elementTools.Connect.extend({
+  getPosition: (view) => {
+    return { x: view.model.size.width, y: 0 }
+  },
+  setPosition: function (view, coordinates) {
+    // var model = view.model;
+    // model.size({ width: coordinates.x, height: coordinates.y });
+  },
+  resetPosition: function (view) { },
+});
+const controltButton = elementTools.Control.extend({
+  getPosition: function (view) {
+    var model = view.model;
+    var size = model.size();
+    return { x: size.width, y: size.height };
+  },
+  setPosition: function (view, coordinates) {
+    var model = view.model;
+    model.size({ width: coordinates.x, height: coordinates.y });
+  },
+  resetPosition: function (view) { },
+});
+export const toolsViewElement = new dia.ToolsView({
+  tools: [removeButtonElement, boundaryToolElement, new connect(), new controltButton({
+    handleAttributes: { fill: "red", cursor: "nwse-resize" },
+  }),],
+});
+
+
 
 export const createLink = (paperInstance, sourceId, targetId, linkArr) => {
   // if (checkLink(linkArr, selectedShape)) {
