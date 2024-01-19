@@ -12,7 +12,6 @@ export const createRectangle = (paperInstance, x, y, createdShapes, createdEntit
   createdShapes.current.push(rect);
   createdEntities.current.push(rect);
   paperInstance.current.model.addCell(rect);
-  return rect
 };
 
 export const createEllipse = (paperInstance, x, y, createdShapes, createdEntities) => {
@@ -25,7 +24,6 @@ export const createEllipse = (paperInstance, x, y, createdShapes, createdEntitie
   createdShapes.current.push(ellipse);
   createdEntities.current.push(ellipse);
   paperInstance.current.model.addCell(ellipse);
-  return ellipse;
 };
 
 export const createRhombus = (paperInstance, x, y, createdShapes, createdEntities) => {
@@ -39,7 +37,6 @@ export const createRhombus = (paperInstance, x, y, createdShapes, createdEntitie
   createdShapes.current.push(polygon);
   createdEntities.current.push(polygon);
   paperInstance.current.model.addCell(polygon);
-  return polygon;
 };
 
 export const createCircle = (paperInstance, x, y, createdShapes, createdEntities) => {
@@ -52,5 +49,4 @@ export const createCircle = (paperInstance, x, y, createdShapes, createdEntities
   createdShapes.current.push(circle);
   createdEntities.current.push(circle)
   paperInstance.current.model.addCell(circle);
-  return circle;
 };

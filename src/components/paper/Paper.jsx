@@ -28,6 +28,8 @@ const Paper = () => {
     initialSize: { width: 0, height: 0 },
   });
 
+  const removeShapeRef = () => shapeRef.current = "";
+
   useEffect(() => {
     if (paperInstance.current === null) {
       const paper = new dia.Paper({
@@ -59,7 +61,7 @@ const Paper = () => {
           } else if (shapeRef.current === "circle") {
             createCircle(paperInstance, x, y, createdShapes, createdEntities);
           }
-          // shapeRef.current = "";
+          // removeShapeRef();
         }
       });
 
@@ -109,6 +111,7 @@ const Paper = () => {
             }
           });
         }
+        removeShapeRef();
       });
 
 
@@ -118,7 +121,7 @@ const Paper = () => {
           createLink(paperInstance, linkView.model.attributes.source.id, oldTarget.current.id, linkArr);
           linkView.model.remove();
         }
-        shapeRef.current = "";
+        removeShapeRef();
       });
 
       paperInstance.current.on("link:pointerdown", (linkView) => {
@@ -126,7 +129,7 @@ const Paper = () => {
         linkInProgress.current = updatedLink;
         updatedLink.addTools(toolsView);
         oldTarget.current = linkView.model.attributes.target;
-        shapeRef.current = "";
+        removeShapeRef();
       });
   
 
@@ -139,7 +142,7 @@ const Paper = () => {
           const currentElement = paperInstance.current.findViewByModel(cellView.model);
           elementInProgress.current = currentElement;
           elementInProgress.current.addTools(toolsViewElement);
-          shapeRef.current = "";
+          removeShapeRef();
         }
       })
 
