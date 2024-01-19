@@ -1,14 +1,13 @@
 import React, { useContext } from 'react'
-import "./Stencil.scss"
 import { Image } from 'semantic-ui-react'
-import { PaperContext } from '../../contexts/PaperContext'
+import { ShapeContext } from '../../contexts/ShapeContext'
+import "./Stencil.scss"
 
 const Stencil = () => {
-  // const {showTitle} = useContext(PaperContext);
-  const { updatePaperContext } = useContext(PaperContext)
+  const { updateShapeContext } = useContext(ShapeContext)
 
   const handleShapeClick = (shapeType) => {
-    updatePaperContext("shapeRef", shapeType);
+    updateShapeContext("shapeRef", shapeType);
   };
 
   return (

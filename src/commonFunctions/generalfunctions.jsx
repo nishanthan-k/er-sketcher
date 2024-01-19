@@ -17,6 +17,7 @@ export const createLink = (paperInstance, sourceId, targetId, linkArr) => {
   });
   linkArr.current.push(link);
   paperInstance.current.model.addCell(link);
+  return link;
 };
 
 export const updateLink = (paperInstance, link, newTarget) => {

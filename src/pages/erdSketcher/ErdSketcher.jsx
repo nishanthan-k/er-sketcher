@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
-import "./ErdSketcher.scss";
 import { Grid, GridColumn, GridRow } from "semantic-ui-react";
-import Stencil from "../../components/stencil/Stencil";
-import Paper from "../../components/paper/Paper";
+import Header from "../../components/header/Header";
 import Inspector from "../../components/inspector/Inspector";
 import Options from "../../components/options/Options";
-import { PaperContext } from "../../contexts/PaperContext";
-import Header from "../../components/header/Header";
+import Paper from "../../components/paper/Paper";
+import Stencil from "../../components/stencil/Stencil";
+import { ShapeContext } from "../../contexts/ShapeContext";
+import "./ErdSketcher.scss";
 
 const ErdSketcher = () => {
-  const { showTitle } = useContext(PaperContext);
+  const { showTitle } = useContext(ShapeContext);
   return (
     <Grid className="erd-container">
       { showTitle && (

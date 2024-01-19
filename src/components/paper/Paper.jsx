@@ -1,34 +1,25 @@
-import { dia, linkTools } from 'jointjs';
+import { dia } from 'jointjs';
 import React, { useContext, useEffect, useRef } from 'react';
 import { createLink } from '../../commonFunctions/generalfunctions';
 import { createCircle, createEllipse, createRectangle, createRhombus } from '../../commonFunctions/shapeFunctions';
 import { OptionContext } from '../../contexts/OptionContext';
 import { PaperContext } from '../../contexts/PaperContext';
 import "./Paper.scss";
+import { ShapeContext } from '../../contexts/ShapeContext';
 
 const Paper = () => {
   const createdShapes = useRef([]);
-  const totalShapes = useRef(null);
   // let selectedShape = [];
   const selectedShape = useRef([]);
   const linkArr = useRef([]);
-  totalShapes.current = 0;
   const createdEntities = useRef([]);
   const linkInProgress = useRef(null);
+  const elementInProgress = useRef(null);
   const oldTarget = useRef(null);
-  const { paperRef, paperInstance, shapeRef, setPosition, setCurrentShape, setShowInspector } = useContext(PaperContext);
+  const { graphRef, paperRef, paperInstance } = useContext(PaperContext);
+  const { shapeRef, setPosition, setCurrentShape, setShowInspector, toolsView, toolsViewElement, } = useContext(ShapeContext);
   const { addLink, removeLink, resize, removeShape } = useContext(OptionContext);
 
-  // Create tools for the link
-  const verticesTool = new linkTools.Vertices();
-  const segmentsTool = new linkTools.Segments();
-  // const sourceArrowheadTool = new linkTools.SourceArrowhead();
-  const targetArrowheadTool = new linkTools.TargetArrowhead();
-  const removeButton = new linkTools.Remove();
-
-  const toolsView = new dia.ToolsView({
-    tools: [targetArrowheadTool, removeButton, verticesTool, segmentsTool],
-  });
 
   const currentAddLink = useRef(null);
 
@@ -37,52 +28,43 @@ const Paper = () => {
     initialSize: { width: 0, height: 0 },
   });
 
-  console.log('re rendering')
-
   useEffect(() => {
     if (paperInstance.current === null) {
       const paper = new dia.Paper({
         el: paperRef.current,
         width: 1020,
         height: 650,
-        model: new dia.Graph(),
+        model: graphRef.current,
       });
       paperInstance.current = paper;
       // }
 
+
+      // adding new shapes
       paperInstance.current.on("blank:pointerclick", (event, x, y) => {
         if (linkInProgress.current) {
           linkInProgress.current.removeTools(toolsView);
         }
-
-        if (shapeRef.current === "rectangle") {
-          totalShapes.current = totalShapes.current + 1;
-          createRectangle(paperInstance, x, y, totalShapes, createdShapes, createdEntities);
-        } else if (shapeRef.current === "ellipse") {
-          totalShapes.current = totalShapes.current + 1;
-          createEllipse(paperInstance, x, y, totalShapes, createdShapes, createdEntities);
-        } else if (shapeRef.current === "rhombus") {
-          totalShapes.current = totalShapes.current + 1;
-          createRhombus(paperInstance, x, y, totalShapes, createdShapes, createdEntities);
-        } else if (shapeRef.current === "circle") {
-          totalShapes.current = totalShapes.current + 1;
-          createCircle(paperInstance, x, y, totalShapes, createdShapes, createdEntities);
+        if (elementInProgress.current) {
+          elementInProgress.current.removeTools(toolsView);
         }
-        // shapeRef.current = "";
+
+        if (!addLink.current) {
+          if (shapeRef.current === "rectangle") {
+            createRectangle(paperInstance, x, y, createdShapes, createdEntities);
+          } else if (shapeRef.current === "ellipse") {
+            createEllipse(paperInstance, x, y, createdShapes, createdEntities);
+          } else if (shapeRef.current === "rhombus") {
+            createRhombus(paperInstance, x, y, createdShapes, createdEntities);
+          } else if (shapeRef.current === "circle") {
+            createCircle(paperInstance, x, y, createdShapes, createdEntities);
+          }
+          // shapeRef.current = "";
+        }
       });
 
-      paperInstance.current.on("element:pointerdown", (cellView) => {
-        if (!addLink.current && !removeLink.current && !removeShape.current && !resize.current) {
-          currentAddLink.current = cellView;
-          setCurrentShape(cellView)
-          setShowInspector(true);
-        }
-      })
 
-      paperInstance.current.on("element:pointermove", (cellView, event, x, y) => {
-        setPosition((prev) => ({ x: x, y: y }))
-      });
-
+      // adding links, removing shapes, resizing shapes
       paperInstance.current.on("element:pointerclick", (cellView) => {
         if (addLink.current) {
           console.log('inside addlink')
@@ -129,6 +111,16 @@ const Paper = () => {
         }
       });
 
+
+      // changing the link's target
+      paperInstance.current.on("link:pointerup", (linkView) => {
+        if (!linkView.model.attributes.target.id) {
+          createLink(paperInstance, linkView.model.attributes.source.id, oldTarget.current.id, linkArr);
+          linkView.model.remove();
+        }
+        shapeRef.current = "";
+      });
+
       paperInstance.current.on("link:pointerdown", (linkView) => {
         const updatedLink = paperInstance.current.findViewByModel(linkView.model);
         linkInProgress.current = updatedLink;
@@ -136,13 +128,25 @@ const Paper = () => {
         oldTarget.current = linkView.model.attributes.target;
         shapeRef.current = "";
       });
+  
 
-      paperInstance.current.on("link:pointerup", (linkView) => {
-        if (!linkView.model.attributes.target.id) {
-          createLink(paperInstance, linkView.model.attributes.source.id, oldTarget.current.id, linkArr);
-          linkView.model.remove();
+      // set the current shape to inspector
+      paperInstance.current.on("element:pointerdown", (cellView) => {
+        if (!addLink.current && !removeLink.current && !removeShape.current && !resize.current) {
+          currentAddLink.current = cellView;
+          setCurrentShape(cellView)
+          setShowInspector(true);
+          const currentElement = paperInstance.current.findViewByModel(cellView.model);
+          elementInProgress.current = currentElement;
+          elementInProgress.current.addTools(toolsViewElement);
+          shapeRef.current = "";
         }
-        shapeRef.current = "";
+      })
+
+      
+      // tracking the position of the current shape
+      paperInstance.current.on("element:pointermove", (cellView, event, x, y) => {
+        setPosition((prev) => ({ x: x, y: y }))
       });
     }
   });

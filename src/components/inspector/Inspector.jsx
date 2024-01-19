@@ -1,9 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { PaperContext } from '../../contexts/PaperContext';
+import React, { useContext, useEffect, useState } from 'react';
+import { ShapeContext } from '../../contexts/ShapeContext';
 import "./Inspector.scss";
 
 const Inspector = () => {
-  const { currentShape, showInspector } = useContext(PaperContext);
+  const { currentShape, showInspector } = useContext(ShapeContext);
   const [text, setText] = useState("");
   const [shapeTitle, setShapeTitle] = useState("");
 
