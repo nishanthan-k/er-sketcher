@@ -60,6 +60,7 @@
     width: 100%;
 
     .table {
+      padding-top: 1rem;
       width: 90%;
       display: flex;
       flex-direction: column;
@@ -67,7 +68,7 @@
       border-collapse: collapse;
 
       .tBody {
-        width: 100%;
+        width: 90%;
 
         .tHeadRow {
           padding-top: 1rem;

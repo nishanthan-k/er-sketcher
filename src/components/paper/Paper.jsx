@@ -89,6 +89,7 @@ const Paper = () => {
       });
 
       paperInstance.current.on("link:pointerdown", (linkView) => {
+        console.log(linkView)
         const updatedLink = paperInstance.current.findViewByModel(linkView.model);
         linkInProgress.current = updatedLink;
         updatedLink.addTools(toolsView);
