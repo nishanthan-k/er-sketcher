@@ -31,14 +31,6 @@ const Inspector = () => {
     currentShape.model.resize(width, currentShape.model.attributes.size.height);
   };
 
-
-  // const submitHandler = (e) => {
-  //   e.preventDefault();
-  //   currentShape.model.attr("label/text", text);
-  //   var width = Math.max(text.length * 7, currentShape.model.attributes.size.width);
-  //   currentShape.model.resize(width, currentShape.model.attributes.size.height);
-  // };
-
   return (
     <>
       { showInspector ? (
@@ -56,25 +48,27 @@ const Inspector = () => {
           </label>
           <div className="table-container">
             <table className='table'>
-              <tr className='tHeadRow'><th className='tHead'>POSITION</th></tr>
-              <tr className='tRow'>
-                <td className='tData'>X</td>
-                <td className='tData'>{ currentShape.model.attributes.position.x }</td>
-                {/* {<td className='tData'>{position.x}</td>  } */ }
-              </tr>
-              <tr className='tRow'>
-                <td className='tData'>Y</td>
-                <td className='tData'>{ currentShape.model.attributes.position.y }</td>
-              </tr>
-              <tr className='tHeadRow'><th className='tHead'>SIZE</th></tr>
-              <tr className='tRow'>
-                <td className='tData'>WIDTH</td>
-                <td className='tData'>{ Math.round(currentShape.model.attributes.size.width) }</td>
-              </tr>
-              <tr className='tRow'>
-                <td className='tData'>HEIGHT</td>
-                <td className='tData'>{ Math.round(currentShape.model.attributes.size.height) }</td>
-              </tr>
+              <tbody className='tBody'>
+                <tr className='tHeadRow'><th className='tHead'>POSITION</th></tr>
+                <tr className='tRow'>
+                  <td className='tData'>X</td>
+                  <td className='tData'>{ currentShape.model.attributes.position.x }</td>
+                  {/* {<td className='tData'>{position.x}</td>  } */ }
+                </tr>
+                <tr className='tRow'>
+                  <td className='tData'>Y</td>
+                  <td className='tData'>{ currentShape.model.attributes.position.y }</td>
+                </tr>
+                <tr className='tHeadRow'><th className='tHead'>SIZE</th></tr>
+                <tr className='tRow'>
+                  <td className='tData'>WIDTH</td>
+                  <td className='tData'>{ Math.round(currentShape.model.attributes.size.width) }</td>
+                </tr>
+                <tr className='tRow'>
+                  <td className='tData'>HEIGHT</td>
+                  <td className='tData'>{ Math.round(currentShape.model.attributes.size.height) }</td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>

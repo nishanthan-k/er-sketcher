@@ -1,7 +1,8 @@
-import { dia, elementTools } from 'jointjs';
+import { dia } from 'jointjs';
 import React, { useContext, useEffect, useRef } from 'react';
 import { createLink, toolsView } from '../../commonFunctions/generalfunctions';
 import { createCircle, createEllipse, createRectangle, createRhombus } from '../../commonFunctions/shapeFunctions';
+import { LinkContext } from "../../contexts/LinkContext";
 import { OptionContext } from '../../contexts/OptionContext';
 import { PaperContext } from '../../contexts/PaperContext';
 import { ShapeContext } from '../../contexts/ShapeContext';
@@ -9,7 +10,6 @@ import "./Paper.scss";
 
 const Paper = () => {
   const createdShapes = useRef([]);
-  // let selectedShape = [];
   const selectedShape = useRef([]);
   const linkArr = useRef([]);
   const createdEntities = useRef([]);
@@ -19,45 +19,10 @@ const Paper = () => {
   const { graphRef, paperRef, paperInstance } = useContext(PaperContext);
   const { shapeRef, setPosition, setCurrentShape, setShowInspector } = useContext(ShapeContext);
   const { addLink, removeLink, resize, removeShape } = useContext(OptionContext);
+  const { toolsViewElement } = useContext(LinkContext)
 
-
-  const currentAddLink = useRef(null);
-
-  const resizeInfo = useRef({
-    isResizing: false,
-    initialSize: { width: 0, height: 0 },
-  });
 
   const removeShapeRef = () => shapeRef.current = "";
-
-  // tools for element
-  const boundaryToolElement = new elementTools.Boundary({
-    padding: 10,
-    rotate: true,
-    useModelGeometry: true,
-  });
-  const removeButtonElement = new elementTools.Remove({
-    distance: 20,
-    offset: 20
-  });
-  const controltButton = elementTools.Control.extend({
-    getPosition: function (view) {
-      var model = view.model;
-      var size = model.size();
-      setPosition((prev) => ({ x: 10, y: 10 }))
-      return { x: size.width, y: size.height };
-    },
-    setPosition: function (view, coordinates) {
-      var model = view.model;
-      model.size({ width: coordinates.x, height: coordinates.y });
-    },
-    resetPosition: function (view) { },
-  });
-  const toolsViewElement = new dia.ToolsView({
-    tools: [removeButtonElement, boundaryToolElement, new controltButton({
-      handleAttributes: { fill: "gray", cursor: "nwse-resize" },
-    }),],
-  });
 
   useEffect(() => {
     if (paperInstance.current === null) {
@@ -75,9 +40,11 @@ const Paper = () => {
       paperInstance.current.on("blank:pointerclick", (event, x, y) => {
         if (linkInProgress.current) {
           linkInProgress.current.removeTools(toolsView);
+          setShowInspector(false);
         }
         if (elementInProgress.current) {
           elementInProgress.current.removeTools(toolsView);
+          setShowInspector(false);
         }
 
         if (!addLink.current) {
@@ -95,7 +62,7 @@ const Paper = () => {
       });
 
 
-      // adding links, removing shapes, resizing shapes
+      // adding links
       paperInstance.current.on("element:pointerclick", (cellView) => {
         if (addLink.current) {
           console.log('inside addlink')
@@ -107,38 +74,6 @@ const Paper = () => {
             selectedShape.current = [];
             // addLink.current = false;
           }
-        } else if (removeShape.current) {
-          console.log('inside remove shape')
-          console.log(cellView.model.id);
-          const removeShape = cellView.model;
-          removeShape.remove();
-        } else if (resize.current) {
-          paperInstance.current.on("element:pointerdown", (cellView, event, x, y) => {
-            if (cellView.model && cellView.model.isElement() && resize.current) {
-              resizeInfo.current.isResizing = true;
-              resizeInfo.current.initialPointerPos = { x: event.clientX, y: event.clientY };
-              resizeInfo.current.initialSize = cellView.model.size();
-            }
-          });
-
-          paperInstance.current.on("element:pointermove", (cellView, event, x, y) => {
-            console.log("resize onmove", resizeInfo.current.isResizing);
-            if (resizeInfo.current.isResizing) {
-              const diffX = event.clientX - resizeInfo.current.initialPointerPos.x;
-              const diffY = event.clientY - resizeInfo.current.initialPointerPos.y;
-
-              const newWidth = Math.max(0, resizeInfo.current.initialSize.width + diffX);
-              const newHeight = Math.max(0, resizeInfo.current.initialSize.height + diffY);
-
-              cellView.model.resize(newWidth, newHeight);
-            }
-          });
-
-          paperInstance.current.on("element:pointerup", (cellView) => {
-            if (resizeInfo.current.isResizing === true) {
-              resizeInfo.current.isResizing = false;
-            }
-          });
         }
         // removeShapeRef();
       });
@@ -165,7 +100,6 @@ const Paper = () => {
       // set the current shape to inspector
       paperInstance.current.on("element:pointerdown", (cellView) => {
         if (!addLink.current && !removeLink.current && !removeShape.current && !resize.current) {
-          currentAddLink.current = cellView;
           setCurrentShape(cellView)
           setShowInspector(true);
           const currentElement = paperInstance.current.findViewByModel(cellView.model);
@@ -180,10 +114,6 @@ const Paper = () => {
       paperInstance.current.on("element:pointermove", (cellView, event, x, y) => {
         setPosition((prev) => ({ x: x, y: y }))
       });
-
-      paperInstance.current.on("blank:mouseenter", () => {
-        console.log('moving')
-      })
     }
   });
 

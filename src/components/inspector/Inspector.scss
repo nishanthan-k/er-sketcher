@@ -1,5 +1,6 @@
 .inspector {
-  padding: 0.5rem;
+  // top-down, left, right
+  padding: 0.5rem .7rem 0;
 
   .generalTitle {
     font-size: 18px;
@@ -28,8 +29,6 @@
 
   .table-container {
     width: 100%;
-    // display: flex;
-    // justify-content: center;
 
     .table {
       width: 80%;
@@ -38,7 +37,10 @@
       align-items: center;
       border-collapse: collapse;
       
-      .tHeadRow {
+      .tBody {
+        width: 100%;
+
+        .tHeadRow {
         padding-top: 1rem;
       }
       
@@ -46,10 +48,7 @@
       .tRow {
         width: 100%;
       }
-      
-      // .tRow {
-      //   border: 1px solid;
-      // }
+      }
     }
   }
 }

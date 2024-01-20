@@ -1,6 +1,7 @@
 import { dia, elementTools, linkTools, shapes } from "jointjs";
 
 
+
 // tools for the link
 const verticesTool = new linkTools.Vertices();
 const segmentsTool = new linkTools.Segments();
@@ -25,16 +26,16 @@ const removeButtonElement = new elementTools.Remove({
   offset: 20
 });
 const controltButton = elementTools.Control.extend({
-  getPosition: function (view) {
+  getPosition: (view) => {
     var model = view.model;
     var size = model.size();
     return { x: size.width, y: size.height };
   },
-  setPosition: function (view, coordinates) {
+  setPosition: (view, coordinates) => {
     var model = view.model;
     model.size({ width: coordinates.x, height: coordinates.y });
   },
-  resetPosition: function (view) { },
+  resetPosition: (view) => { },
 });
 export const toolsViewElement = new dia.ToolsView({
   tools: [removeButtonElement, boundaryToolElement, new controltButton({
@@ -44,14 +45,13 @@ export const toolsViewElement = new dia.ToolsView({
 
 
 export const createLink = (paperInstance, sourceId, targetId, linkArr) => {
-  // if (checkLink(linkArr, selectedShape)) {
   const link = new shapes.standard.Link({
     source: { id: sourceId },
     target: { id: targetId },
     attrs: {
       line: {
         stroke: "black",
-        // targetMarker: null,
+        targetMarker: null,
         sourceMarker: null,
       },
     },
@@ -61,31 +61,6 @@ export const createLink = (paperInstance, sourceId, targetId, linkArr) => {
   linkArr.current.push(link);
   paperInstance.current.model.addCell(link);
   return link;
-};
-
-export const updateLink = (paperInstance, link, newTarget) => {
-  const newLink = new shapes.standard.Link({
-    source: { id: link.attributes.source.id },
-    target: { id: newTarget },
-    attrs: {
-      line: {
-        stroke: "black",
-        targetMarker: null,
-        sourceMarker: null,
-      }
-    }
-  });
-  deleteLink(paperInstance, link.id)
-  paperInstance.current.model.addCell(newLink);
-}
-
-
-export const deleteLink = (paperInstance, linkId, linkArr) => {
-  const linkToRemove = paperInstance.current.model.getCell(linkId);
-  if (linkToRemove) {
-    linkToRemove.remove();
-  }
-  // paperInstance.current.model.remove();
 };
 
 export const checkLink = (linkArr, selectedShape) => {

@@ -2,6 +2,7 @@ import { shapes } from "jointjs";
 
 export const createRectangle = (paperInstance, x, y, createdShapes, createdEntities) => {
   const rect = new shapes.standard.Rectangle();
+
   rect.position(x, y);
   rect.resize(110, 50);
   rect.attr('root/title', 'joint.shapes.standard.Rectangle');
