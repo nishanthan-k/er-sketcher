@@ -5,11 +5,16 @@ import "./Inspector.scss";
 const Inspector = () => {
   const { currentShape, showInspector } = useContext(ShapeContext);
   const [text, setText] = useState("");
+  const [textColor, setTextColor] = useState("");
+  const [shapeColor, setShapeColor] = useState("");
   const [shapeTitle, setShapeTitle] = useState("");
 
   useEffect(() => {
     if (showInspector && currentShape !== null) {
+      console.log(currentShape)
       setText(currentShape.model.attributes.attrs.label.text);
+      setTextColor(currentShape.model.attributes.attrs.label.fill);
+      setShapeColor(currentShape.model.attributes.attrs.body.fill);
       let tempShape = currentShape.model.attributes.type.split(".")[1];
       if (tempShape === "Rectangle") {
         setShapeTitle("Entity")
@@ -31,13 +36,24 @@ const Inspector = () => {
     currentShape.model.resize(width, currentShape.model.attributes.size.height);
   };
 
+  const colorHandler = (e, title) => {
+    const newColor = e.target.value;
+    if (title === "text") {
+      setTextColor(newColor);
+      currentShape.model.attr("label/fill", newColor);
+    } else if (title === "shape") {
+      setShapeColor(newColor);
+      currentShape.model.attr("body/fill", newColor);
+    }
+  }
+
   return (
     <>
       { showInspector ? (
         <div className='inspector'>
           <p className='generalTitle'>PRESENTATION</p>
           <p className='shapeTitle'>{ shapeTitle }</p>
-          <label>
+          <div className="elementAttributes">
             <input
               type="text"
               placeholder={ text || "Text" }
@@ -45,7 +61,27 @@ const Inspector = () => {
               onChange={ textHandler }
               autoFocus
             />
-          </label>
+            <label htmlFor="textColor" className='textColor-label'>
+              <span>Text Color: </span>
+              <input
+                type="color"
+                value={ textColor }
+                onChange={ (e) => colorHandler(e, "text") }
+                className='textColor'
+                name='textColor'
+              />
+            </label>
+            <label htmlFor="shapeColor" className='shapeColor-label'>
+              <span>Shape Color: </span>
+              <input
+                type="color"
+                value={ shapeColor }
+                onChange={ (e) => colorHandler(e, "shape") }
+                className='shapeColor'
+                name='shapeColor'
+              />
+            </label>
+          </div>
           <div className="table-container">
             <table className='table'>
               <tbody className='tBody'>

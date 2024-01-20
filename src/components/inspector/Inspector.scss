@@ -1,6 +1,12 @@
 .inspector {
   // top-down, left, right
-  padding: 0.5rem .7rem 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  // justify-content: center;
+  // align-items: center;
+  gap: 10px;
+  padding: 0.5rem 0.7rem 0;
 
   .generalTitle {
     font-size: 18px;
@@ -12,42 +18,65 @@
     font-weight: 500;
   }
 
-  display: flex;
-  flex-direction: column;
-  // justify-content: center;
-  // align-items: center;
-  gap: 10px;
+  .elementAttributes {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 
-  input {
-    height: 30px;
-    outline: none;
-    outline: 2px solid gray;
-    border: none;
-    border-radius: 5px;
-    padding-left: 10px;
+    input {
+      height: 30px;
+      outline: none;
+      outline: 2px solid gray;
+      border: none;
+      border-radius: 5px;
+      padding-left: 10px;
+    }
+
+    .textColor-label {
+      display: flex;
+      align-items: center;
+
+      span,
+      .textColor {
+        width: 45%;
+        font-size: 15px;
+      }
+    }
+
+    .shapeColor-label {
+      display: flex;
+      align-items: center;
+
+      span,
+      .shapeColor {
+        width: 45%;
+        font-size: 15px;
+      }
+    }
   }
 
   .table-container {
     width: 100%;
 
     .table {
-      width: 80%;
+      width: 90%;
       display: flex;
       flex-direction: column;
       align-items: center;
       border-collapse: collapse;
-      
+
       .tBody {
         width: 100%;
 
         .tHeadRow {
-        padding-top: 1rem;
-      }
-      
-      .tData,
-      .tRow {
-        width: 100%;
-      }
+          padding-top: 1rem;
+        }
+
+        .tData,
+        .tRow {
+          width: 100%;
+        }
       }
     }
   }
