@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { LinkContext } from '../../contexts/LinkContext';
 import "./LinkDetails.scss"
+import { wordFormat } from '../../commonFunctions/generalfunctions';
 
 const LinkDetails = () => {
   const { linkInProgress } = useContext(LinkContext);
@@ -23,12 +24,10 @@ const LinkDetails = () => {
 
       setStrokeWidth(linkInProgress.current.model.attributes.attrs.line.strokeWidth)
 
-      let rout = linkInProgress.current.model.attributes.router.name
-      rout = rout[0].toUpperCase() + rout.slice(1);
+      let rout = wordFormat(linkInProgress.current.model.attributes.router.name)
       setRouter(rout)
 
-      let connect = linkInProgress.current.model.attributes.connector.name
-      connect = connect[0].toUpperCase() + connect.slice(1)
+      let connect = wordFormat(linkInProgress.current.model.attributes.connector.name)
       setConnector(connect)
     }
   }, [linkInProgress]);
@@ -61,7 +60,7 @@ const LinkDetails = () => {
 
   return (
     <div className='link-details'>
-      <h2>{ strokeType }</h2>
+      <h3 className='title'>{ strokeType }</h3>
       <label htmlFor="strokeWidth" className='strokeWidth-label'>
         <span className='attribute-name'>Stroke Width: </span>
         <input

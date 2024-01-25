@@ -1,7 +1,5 @@
 import { dia, elementTools, linkTools, shapes } from "jointjs";
 
-
-
 // tools for the link
 const verticesTool = new linkTools.Vertices();
 const segmentsTool = new linkTools.Segments();
@@ -13,7 +11,6 @@ const removeButton = new linkTools.Remove({
 export const toolsView = new dia.ToolsView({
   tools: [targetArrowheadTool, removeButton, verticesTool, segmentsTool],
 });
-
 
 // tools for element
 const boundaryToolElement = new elementTools.Boundary({
@@ -67,4 +64,10 @@ export const checkLink = (linkArr, selectedShape) => {
   var status = linkArr.filter(link => ((selectedShape[1].id === link.attributes.source.id && selectedShape[0].id === link.attributes.target.id) || (selectedShape[0].id === link.attributes.source.id && selectedShape[1].id === link.attributes.target.id)))
 
   return status.length === 0 ? true : false;
+}
+
+
+export const wordFormat = (word) => {
+  word = word[0].toUpperCase() + word.slice(1);
+  return word;
 }

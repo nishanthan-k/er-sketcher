@@ -127,6 +127,13 @@ const Paper = () => {
           const currentElement = paperInstance.current.findViewByModel(cellView.model);
           elementInProgress.current = currentElement;
           elementInProgress.current.addTools(toolsViewElement);
+          // if (elementInProgress.current !== currentElement) {
+          //   elementInProgress.current = currentElement;
+          //   elementInProgress.current.addTools(toolsViewElement);
+          // } else {
+          //   elementInProgress.current = null;
+          // }
+          
           removeShapeRef();
         }
       })

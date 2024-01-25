@@ -50,7 +50,7 @@ const ElementDetails = () => {
   return (
     <div className='element-details'>
       <h3 className='generalTitle'>PRESENTATION</h3>
-      <p className='shapeTitle'>{ shapeTitle }</p>
+      <p className='shapeTitle title'>{ shapeTitle }</p>
       <div className="elementAttributes">
         <input
           type="text"
