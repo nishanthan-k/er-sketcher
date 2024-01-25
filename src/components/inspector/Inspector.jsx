@@ -1,119 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
+import { LinkContext } from '../../contexts/LinkContext';
 import { ShapeContext } from '../../contexts/ShapeContext';
+import ElementDetails from './ElementDetails';
 import "./Inspector.scss";
+import LinkDetails from './LinkDetails';
 
 const Inspector = () => {
-  const { currentShape, showInspector } = useContext(ShapeContext);
-  const [text, setText] = useState("");
-  const [textColor, setTextColor] = useState("");
-  const [shapeColor, setShapeColor] = useState("");
-  const [shapeTitle, setShapeTitle] = useState("");
-
-  useEffect(() => {
-    if (showInspector && currentShape !== null) {
-      console.log(currentShape)
-      setText(currentShape.model.attributes.attrs.label.text);
-      setTextColor(currentShape.model.attributes.attrs.label.fill);
-      setShapeColor(currentShape.model.attributes.attrs.body.fill);
-      let tempShape = currentShape.model.attributes.type.split(".")[1];
-      if (tempShape === "Rectangle") {
-        setShapeTitle("Entity")
-      } else if (tempShape === "Ellipse") {
-        setShapeTitle("Attribute")
-      } else if (tempShape === "Polygon") {
-        setShapeTitle("Relation")
-      } else if (tempShape === "Circle") {
-        setShapeTitle("Circle")
-      }
-    }
-  }, [showInspector, currentShape]);
-
-  const textHandler = (e) => {
-    const newText = e.target.value;
-    setText(newText);
-    currentShape.model.attr("label/text", newText);
-    var width = Math.max(newText.length * 7, currentShape.model.attributes.size.width);
-    currentShape.model.resize(width, currentShape.model.attributes.size.height);
-  };
-
-  const colorHandler = (e, title) => {
-    const newColor = e.target.value;
-    if (title === "text") {
-      setTextColor(newColor);
-      currentShape.model.attr("label/fill", newColor);
-    } else if (title === "shape") {
-      setShapeColor(newColor);
-      currentShape.model.attr("body/fill", newColor);
-    }
-  }
+  const { showElement } = useContext(ShapeContext);
+  const { showLink } = useContext(LinkContext);
 
   return (
-    <>
-      { showInspector ? (
-        <div className='inspector'>
-          <p className='generalTitle'>PRESENTATION</p>
-          <p className='shapeTitle'>{ shapeTitle }</p>
-          <div className="elementAttributes">
-            <input
-              type="text"
-              placeholder={ text || "Text" }
-              value={ text }
-              onChange={ textHandler }
-              autoFocus
-            />
-            <label htmlFor="textColor" className='textColor-label'>
-              <span>Text Color: </span>
-              <input
-                type="color"
-                value={ textColor }
-                onChange={ (e) => colorHandler(e, "text") }
-                className='textColor'
-                name='textColor'
-              />
-            </label>
-            <label htmlFor="shapeColor" className='shapeColor-label'>
-              <span>Shape Color: </span>
-              <input
-                type="color"
-                value={ shapeColor }
-                onChange={ (e) => colorHandler(e, "shape") }
-                className='shapeColor'
-                name='shapeColor'
-              />
-            </label>
-          </div>
-          <div className="table-container">
-            <table className='table'>
-              <tbody className='tBody'>
-                <tr className='tHeadRow'><th className='tHead'>POSITION</th></tr>
-                <tr className='tRow'>
-                  <td className='tData'>X</td>
-                  <td className='tData'>{ currentShape.model.attributes.position.x }</td>
-                  {/* {<td className='tData'>{position.x}</td>  } */ }
-                </tr>
-                <tr className='tRow'>
-                  <td className='tData'>Y</td>
-                  <td className='tData'>{ currentShape.model.attributes.position.y }</td>
-                </tr>
-                <tr className='tHeadRow'><th className='tHead'>SIZE</th></tr>
-                <tr className='tRow'>
-                  <td className='tData'>WIDTH</td>
-                  <td className='tData'>{ Math.round(currentShape.model.attributes.size.width) }</td>
-                </tr>
-                <tr className='tRow'>
-                  <td className='tData'>HEIGHT</td>
-                  <td className='tData'>{ Math.round(currentShape.model.attributes.size.height) }</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      ) : (
-        <div className='inspector'>
-          <p className='generalTitle'>INSPECTOR AREA</p>
-        </div>
-      ) }
-    </>
+    <div className='inspector'>
+      { showElement && <ElementDetails /> }
+      { showLink && <LinkDetails /> }
+      { (!showElement && !showLink) && <h3 className='generalTitle'>INSPECTOR AREA</h3> }
+    </div >
   );
 };
 

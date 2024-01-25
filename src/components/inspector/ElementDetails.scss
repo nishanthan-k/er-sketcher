@@ -1,0 +1,38 @@
+.element-details {
+  .shapeTitle {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .elementAttributes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .entityText {
+      width: 90%;
+      padding-left: 7px;
+    }
+
+    .attribute-name {
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .textColor-label,
+    .shapeColor-label {
+      width: 60%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .table-container {
+      width: 100%;
+      .table {
+        width: 100%;
+        padding: 0 5%;
+      }
+    }
+  }
+}

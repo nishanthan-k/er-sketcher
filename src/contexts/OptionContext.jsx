@@ -12,7 +12,6 @@ export const OptionContextProvider = ({ children }) => {
   const resize = useRef(false);
   const removeShape = useRef(false);
   const downloadCanvas = useRef(false);
-  const exportJson = useRef(false);
   const fileInputRef = useRef(null);
   const { paperRef, paperInstance } = useContext(PaperContext);
   const { shapeRef } = useContext(ShapeContext);
@@ -102,7 +101,6 @@ export const OptionContextProvider = ({ children }) => {
       // uploadJson();
     }
 
-    console.log("updateContext", addLink, removeLink, resize, removeShape, downloadCanvas, exportJson);
   };
 
   return (

@@ -5,6 +5,7 @@ import { PaperContextProvider } from "./contexts/PaperContext";
 import { OptionContextProvider } from "./contexts/OptionContext";
 import ShapeContextProvider from "./contexts/ShapeContext";
 import LinkContextProvider from "./contexts/LinkContext";
+// import Test from "./Test";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         </LinkContextProvider>
       </ShapeContextProvider>
     </PaperContextProvider>
+    // <Test />
   );
 }
 

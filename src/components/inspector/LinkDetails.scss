@@ -1,0 +1,38 @@
+.link-details {
+  .strokeWidth-label {
+    display: flex;
+    gap: 10%;
+
+     & > input {
+      width: 40%;
+     }
+  }
+
+  .strokeColor-label {
+    padding-top: 10px;
+    display: flex;
+    gap: 10%;
+
+     & > input {
+      width: 40%;
+     }
+  }
+
+  .attribute-name {
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  .router, .connector {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10%;
+    padding: 10px 0 0;
+
+    & > select {
+      width: 110px;
+    }
+  }
+}

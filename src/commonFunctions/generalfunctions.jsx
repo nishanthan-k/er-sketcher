@@ -55,8 +55,8 @@ export const createLink = (paperInstance, sourceId, targetId, linkArr) => {
         sourceMarker: null,
       },
     },
-    // router: {name: "rightAngle"},
-    // connector: {name: "rounded"} 
+    router: {name: "normal"},
+    connector: {name: "normal"} 
   });
   linkArr.current.push(link);
   paperInstance.current.model.addCell(link);

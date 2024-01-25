@@ -1,11 +1,13 @@
 import { dia, elementTools, linkTools, shapes } from "jointjs";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useRef, useState } from "react";
 import { ShapeContext } from "./ShapeContext";
 
 export const LinkContext = createContext();
 
 const LinkContextProvider = ({ children }) => {
   const { setPosition } = useContext(ShapeContext)
+  const [showLink, setShowLink] = useState(false);
+  const linkInProgress = useRef(null);
 
   // tools for the link
   const verticesTool = new linkTools.Vertices();
@@ -57,21 +59,22 @@ const LinkContextProvider = ({ children }) => {
       target: { id: targetId },
       attrs: {
         line: {
-          stroke: "black",
+          stroke: "#000000",
           targetMarker: null,
           sourceMarker: null,
         },
       },
-      // router: {name: "rightAngle"},
-      // connector: {name: "rounded"} 
+      router: {name: "rightAngle"},
+      connector: {name: "rounded"} 
     });
+    console.log('link', link)
     linkArr.current.push(link);
     paperInstance.current.model.addCell(link);
     return link;
   };
 
   return (
-    <LinkContext.Provider value={ { toolsViewLink, toolsViewElement, createLink } }>
+    <LinkContext.Provider value={ { toolsViewLink, toolsViewElement, createLink, linkInProgress, showLink, setShowLink } }>
       { children }
     </LinkContext.Provider>
   )

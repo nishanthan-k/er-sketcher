@@ -13,13 +13,11 @@ const Paper = () => {
   const selectedShape = useRef([]);
   const linkArr = useRef([]);
   const createdEntities = useRef([]);
-  const linkInProgress = useRef(null);
-  const elementInProgress = useRef(null);
   const oldTarget = useRef(null);
   const { graphRef, paperRef, paperInstance } = useContext(PaperContext);
-  const { shapeRef, setPosition, setCurrentShape, setShowInspector } = useContext(ShapeContext);
+  const { shapeRef, elementInProgress, setPosition, setCurrentShape, setShowElement } = useContext(ShapeContext);
   const { addLink, removeLink, resize, removeShape } = useContext(OptionContext);
-  const { toolsViewElement } = useContext(LinkContext)
+  const { toolsViewElement, linkInProgress, setShowLink } = useContext(LinkContext)
 
 
   const removeShapeRef = () => shapeRef.current = "";
@@ -32,7 +30,28 @@ const Paper = () => {
         height: 650,
         model: graphRef.current,
       });
+
+      // paper.drawGrid({
+      //   name: 'mesh',
+      //   args: {
+      //     color: '#000000',
+      //     gridsize: 10,  
+      //     thickness: 10,  
+      //   },
+      // });
+
+      paper.drawGrid({
+        name: 'doubleMesh',
+          args: [
+            { color: 'red', thickness: 1 }, 
+            { color: 'green', scaleFactor: 5, thickness: 5 } 
+          ]
+      })
+
+      // paper.setGrid({ name: 'mesh', args: { color: 'red', thickness: 10, } });
+
       paperInstance.current = paper;
+
       // }
 
 
@@ -40,11 +59,11 @@ const Paper = () => {
       paperInstance.current.on("blank:pointerclick", (event, x, y) => {
         if (linkInProgress.current) {
           linkInProgress.current.removeTools(toolsView);
-          setShowInspector(false);
+          setShowLink(false);
         }
         if (elementInProgress.current) {
           elementInProgress.current.removeTools(toolsView);
-          setShowInspector(false);
+          setShowElement(false);
         }
 
         if (!addLink.current) {
@@ -71,6 +90,7 @@ const Paper = () => {
           } else if (selectedShape.current.length === 1 && selectedShape.current[0] !== cellView.model) {
             selectedShape.current.push(cellView.model);
             createLink(paperInstance, selectedShape.current[0].id, selectedShape.current[1].id, linkArr);
+            // console.log('link', link.modal.attributes.router.name)
             selectedShape.current = [];
             // addLink.current = false;
           }
@@ -92,17 +112,18 @@ const Paper = () => {
         console.log(linkView)
         const updatedLink = paperInstance.current.findViewByModel(linkView.model);
         linkInProgress.current = updatedLink;
+        setShowLink(true);
         updatedLink.addTools(toolsView);
         oldTarget.current = linkView.model.attributes.target;
         removeShapeRef();
       });
-  
+
 
       // set the current shape to inspector
       paperInstance.current.on("element:pointerdown", (cellView) => {
         if (!addLink.current && !removeLink.current && !removeShape.current && !resize.current) {
           setCurrentShape(cellView)
-          setShowInspector(true);
+          setShowElement(true);
           const currentElement = paperInstance.current.findViewByModel(cellView.model);
           elementInProgress.current = currentElement;
           elementInProgress.current.addTools(toolsViewElement);
@@ -110,7 +131,7 @@ const Paper = () => {
         }
       })
 
-      
+
       // tracking the position of the current shape
       paperInstance.current.on("element:pointermove", (cellView, event, x, y) => {
         setPosition((prev) => ({ x: x, y: y }))
